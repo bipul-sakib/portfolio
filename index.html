@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sakib Hasan Bipul</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Portfolio and CV">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: sticky identity card on the left, scrolling CV on the right; a highlighter-pen accent marks what matters. */
+  :root {
+    /* Palette: saturated indigo dye with a marigold thread on undyed fabric */
+    --bg: #f5f5f0;
+    --surface: #ffffff;
+    --ink: #16213a;
+    --muted: #566079;
+    --line: #dddfd8;
+    --accent: #2447a8;
+    --marker: #fbcf5e;
+    --marker-ink: #16213a;
+    --card: #1b3a8a;
+    --gold: #f6b73c;
+    --duo: var(--gold);
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "Figtree", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1422; --surface: #182036; --ink: #e9ecf4; --muted: #a0a9c0;
+      --line: #2a3450; --accent: #93b0ff; --marker: #f6b73c; --marker-ink: #16213a;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1422; --surface: #182036; --ink: #e9ecf4; --muted: #a0a9c0;
+    --line: #2a3450; --accent: #93b0ff; --marker: #f6b73c; --marker-ink: #16213a;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 1rem/1.65 var(--body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: clamp(24px, 5vw, 64px);
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  .page {
+    max-width: 1120px; margin: 0 auto;
+    display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 64px); align-items: start;
+  }
+
+  /* Woven threads drifting behind the page */
+  #threads { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .page { position: relative; z-index: 1; }
+
+  /* ---------- Identity card ---------- */
+  .card {
+    position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px);
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 20px; padding: 28px;
+    display: flex; flex-direction: column; gap: 22px;
+  }
+  .avatar {
+    width: 128px; height: 128px; border-radius: 50%; border: 3px solid var(--gold);
+    display: grid; place-items: center; position: relative; overflow: hidden;
+    background: var(--accent); color: var(--surface);
+    font: 800 2rem/1 var(--display);
+  }
+  /* The photo sits over the initials, which show only if the photo can't load */
+  .avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .status {
+    display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+    font: 500 0.78rem/1 var(--mono); color: var(--muted);
+    border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px;
+  }
+  .status::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%; background: #3f8f6b;
+    box-shadow: 0 0 0 0 rgba(63,143,107,.5); animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(63,143,107,0); } 100% { box-shadow: 0 0 0 0 rgba(63,143,107,0); } }
+
+  h1 {
+    font: 800 clamp(2.2rem, 5vw, 2.9rem)/1.02 var(--display);
+    letter-spacing: -0.02em; margin: 0; text-wrap: balance;
+  }
+  .role { margin: 6px 0 0; font-size: 1.05rem; color: var(--muted); }
+
+  .contact { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 0.95rem; }
+  .contact li { display: grid; grid-template-columns: 72px minmax(0,1fr); gap: 8px; }
+  .contact span:first-child { font: 500 0.72rem/1.9 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .contact span:last-child { overflow-wrap: anywhere; }
+
+  .copy {
+    border: 0; cursor: pointer; font: 600 0.95rem/1 var(--body);
+    background: var(--ink); color: var(--bg);
+    padding: 13px 18px; border-radius: 12px; width: 100%;
+    transition: transform .15s ease;
+  }
+  .copy:hover { transform: translateY(-2px); }
+
+  .label { font: 500 0.72rem/1 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 0 0 12px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+  .tags li { font-size: 0.85rem; padding: 5px 11px; border-radius: 8px; background: var(--bg); border: 1px solid var(--line); }
+
+  /* The card is the page's one solid block of colour: it stays indigo in both themes */
+  .card {
+    --surface: var(--card); --ink: #ffffff; --muted: #c3d0ee;
+    --line: rgba(255,255,255,.2); --bg: rgba(255,255,255,.1); --accent: var(--gold);
+    color: var(--ink); border-color: transparent;
+  }
+  .card .copy { background: var(--gold); color: #16213a; }
+
+  /* ---------- Main column ---------- */
+  main { display: flex; flex-direction: column; gap: clamp(48px, 7vw, 80px); min-width: 0; }
+  .intro p {
+    font: 500 clamp(1.45rem, 3.2vw, 2.1rem)/1.3 var(--display);
+    letter-spacing: -0.01em; margin: 0; max-width: 30ch; text-wrap: balance;
+  }
+  mark {
+    color: var(--marker-ink);
+    background: linear-gradient(transparent 12%, var(--marker) 12%, var(--marker) 88%, transparent 88%) no-repeat 0 0 / 100% 100%;
+    padding: 0 .12em; border-radius: 3px; animation: swipe 0.9s cubic-bezier(.6,.1,.2,1) both;
+  }
+  mark:nth-of-type(2) { animation-delay: .35s; }
+  @keyframes swipe { from { background-size: 0% 100%; } to { background-size: 100% 100%; } }
+
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }
+  .stats div { border-top: 3px solid var(--accent); padding-top: 12px; }
+  .stats b { display: block; color: var(--accent); font: 800 2rem/1 var(--display); font-variant-numeric: tabular-nums; }
+  .stats span { font-size: 0.88rem; color: var(--muted); }
+
+  h2 {
+    font: 800 1.6rem/1.1 var(--display); letter-spacing: -0.01em; margin: 0 0 24px;
+    display: flex; align-items: baseline; gap: 14px;
+  }
+  h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* Experience timeline: dates in mono on the left, the job on the right */
+  .timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 32px; }
+  .job { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 20px; }
+  .when { font: 400 0.82rem/1.9 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .job h3 { font: 600 1.12rem/1.35 var(--body); margin: 0; }
+  .job h3 em { font-style: normal; color: var(--accent); }
+  .job ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); display: grid; gap: 4px; }
+  .job li::marker { color: var(--accent); }
+
+  .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .project {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px; display: flex; flex-direction: column; gap: 10px;
+    text-decoration: none; color: inherit;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .project:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .project h3 { font: 800 1.2rem/1.2 var(--display); margin: 0; display: flex; justify-content: space-between; gap: 12px; }
+  .project h3 span { color: var(--accent); transition: transform .2s ease; }
+  .project:hover h3 span { transform: translate(3px, -3px); }
+  .project p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  .project .tags li { font: 400 0.75rem/1.4 var(--mono); padding: 3px 8px; }
+
+  .edu { display: grid; gap: 20px; }
+  .edu .job h3 { font-size: 1.05rem; }
+  .edu .job p { margin: 4px 0 0; color: var(--muted); }
+
+  .langs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: center; }
+  .duo { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; min-width: 0; }
+  .duo-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .duo-head b { font: 800 3rem/1 var(--display); font-variant-numeric: tabular-nums; }
+  .duo-head span { color: var(--muted); }
+  .meter { height: 10px; border-radius: 999px; background: var(--line); margin-top: 14px; overflow: hidden; }
+  .meter i { display: block; height: 100%; width: 81.25%; background: var(--duo); border-radius: 999px; }
+  .scale { display: flex; justify-content: space-between; font: 400 0.75rem/1.8 var(--mono); color: var(--muted); }
+  .lang-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  .lang-list b { display: block; font: 600 1.05rem/1.35 var(--body); }
+  .lang-list span { color: var(--muted); }
+
+  footer { color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--line); padding-top: 20px; }
+
+  @media (max-width: 860px) {
+    .page { grid-template-columns: minmax(0, 1fr); }
+    .card { position: static; }
+  }
+  @media (max-width: 560px) {
+    .projects, .langs { grid-template-columns: minmax(0, 1fr); }
+    .job { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+    .stats b { font-size: 1.6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="threads" aria-hidden="true"></canvas>
+
+<div class="page">
+  <!-- ===== Identity card: edit your name, role and contact details here ===== -->
+  <aside class="card">
+    <div class="avatar">SB<img src="images/dp.jpeg" alt="Portrait of Sakib Hasan Bipul" onerror="this.hidden=true"></div>
+    <span class="status">Seeking an apparel internship</span>
+    <div>
+      <h1>Sakib Hasan Bipul</h1>
+      <p class="role">Final-year Textile Engineering student · Apparel Engineering · Bangladesh</p>
+    </div>
+
+    <ul class="contact">
+      <li><span>Email</span><span id="email">sakib.btec@gmail.com</span></li>
+      <li><span>LinkedIn</span><span><a href="https://www.linkedin.com/in/shbipul/" target="_blank" rel="noopener">linkedin.com/in/shbipul</a></span></li>
+      <li><span>Based in</span><span>Bangladesh · open to Dhaka, on-site or hybrid</span></li>
+    </ul>
+
+    <button class="copy" id="copy-email" type="button">Copy email address</button>
+
+    <div>
+      <p class="label">Core skills</p>
+      <ul class="tags">
+        <li>Garment Manufacturing</li><li>Quality Control</li><li>Production Planning</li>
+        <li>Costing</li><li>Process Optimization</li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">Tools &amp; data</p>
+      <ul class="tags">
+        <li>Machine Learning</li><li>Statistical Data Analysis</li><li>Web Development</li>
+        <li>Adobe Illustrator</li><li>Photoshop</li><li>Microsoft Office</li>
+      </ul>
+    </div>
+    <div>
+      <p class="label">Professional skills</p>
+      <ul class="tags">
+        <li>Leadership</li><li>Communication</li><li>Teamwork</li><li>Team Building</li>
+        <li>Management</li><li>Time Management</li><li>Presentations</li>
+        <li>Customer Service</li><li>Teaching</li><li>Employability</li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <section class="intro" aria-label="About me">
+      <p>I turn <mark>fibre, fabric and data</mark> into better garments, from the sewing floor to a <mark>machine-learning model</mark>.</p>
+      <div class="stats">
+        <div><b>300+</b><span>students reached by my career seminars</span></div>
+        <div><b>6+</b><span>years of part-time work alongside study</span></div>
+        <div><b>2</b><span>student clubs I help lead</span></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="exp">
+      <h2 id="exp">Experience</h2>
+      <ol class="timeline">
+        <li class="job">
+          <span class="when">Internship</span>
+          <div>
+            <h3>Intern · <em>Commitment Fashion Ltd</em></h3>
+            <ul>
+              <li>Worked across garment production, quality control, costing and production planning on a live factory floor.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="job">
+          <span class="when">Feb 2025 — Now</span>
+          <div>
+            <h3>Senior Executive · <em>TTEC Career Club</em></h3>
+            <ul>
+              <li>Organise career seminars that have reached 300+ students.</li>
+              <li>Build relationships with industry mentors for club members.</li>
+              <li>Previously Executive (2024–25) and Member (2023–24).</li>
+            </ul>
+          </div>
+        </li>
+        <li class="job">
+          <span class="when">Feb 2025 — Now</span>
+          <div>
+            <h3>Senior Executive · <em>TTEC Language Club</em></h3>
+            <ul>
+              <li>Help lead the club's team and its communication-skills activities.</li>
+              <li>Previously Executive (2024–25) and Member (2023–24).</li>
+            </ul>
+          </div>
+        </li>
+        <li class="job">
+          <span class="when">Jun 2020 — Nov 2022</span>
+          <div>
+            <h3>Customer Service Officer · <em>Bank Asia PLC</em></h3>
+            <ul>
+              <li>Part-time, Sarishabari. Handled day-to-day customer service operations.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="job">
+          <span class="when">Oct 2016 — Oct 2020</span>
+          <div>
+            <h3>Trainer · <em>Bangladesh Post Office (GPO)</em></h3>
+            <ul>
+              <li>Part-time, Sarishabari Upazila. Taught and trained for four years.</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="work">
+      <h2 id="work">Projects &amp; Research</h2>
+      <div class="projects">
+        <div class="project">
+          <h3>Predicting fabric bursting strength</h3>
+          <p>Final-year thesis. Uses machine learning to predict the bursting strength of single jersey knitted fabric from its properties, so quality can be estimated before testing.</p>
+          <ul class="tags"><li>Machine Learning</li><li>Knitting</li><li>Data Analysis</li></ul>
+        </div>
+        <div class="project">
+          <h3>Career seminars at TTEC</h3>
+          <p>Planned and ran career seminars with industry mentors, reaching more than 300 textile engineering students.</p>
+          <ul class="tags"><li>Leadership</li><li>Event Planning</li><li>Networking</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="edu-h">
+      <h2 id="edu-h">Education &amp; Certifications</h2>
+      <div class="edu">
+        <div class="job">
+          <span class="when">2022 — Feb 2027</span>
+          <div>
+            <h3>BSc in Textile Engineering (Apparel Engineering)</h3>
+            <p>Tangail Textile Engineering College, Kalihati, Tangail</p>
+          </div>
+        </div>
+        <div class="job">
+          <span class="when">2017 — 2021</span>
+          <div>
+            <h3>Diploma in Engineering, Textile Technology</h3>
+            <p>Textile Institute, Natore · Grade 3.70</p>
+          </div>
+        </div>
+        <div class="job">
+          <span class="when">Nov 2023</span>
+          <div>
+            <h3>21st Century Employability Skilling Program – Advanced (Basic Level)</h3>
+            <p>Wadhwani Foundation · <a href="https://web.certificate.wfglobal.org/en/certificate?certificateId=654ca6e8196de8ddecf235ff" target="_blank" rel="noopener">Show credential</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="lang-h">
+      <h2 id="lang-h">Languages</h2>
+      <div class="langs">
+        <div class="duo">
+          <p class="label">Duolingo · connected on LinkedIn · May 2026</p>
+          <div class="duo-head"><b>130</b><span>Duolingo Score in English</span></div>
+          <div class="meter" role="img" aria-label="Score of 130 on a scale of 0 to 160"><i></i></div>
+          <div class="scale"><span>0</span><span>160</span></div>
+        </div>
+        <ul class="lang-list">
+          <li><b>English</b><span>Professional working proficiency</span></li>
+          <li><b>Bengali</b><span>Native or bilingual proficiency</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>© 2026 Sakib Hasan Bipul</footer>
+  </main>
+</div>
+
+<script>
+  // Warp and weft threads: each is a line that sways on two sine waves; every fifth one is a thicker marigold thread
+  (function () {
+    var canvas = document.getElementById("threads"), ctx = canvas.getContext("2d");
+    var threads = [], w = 0, h = 0;
+    var still = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function makeThreads(count, vertical) {
+      for (var i = 0; i < count; i++) {
+        threads.push({
+          vertical: vertical,
+          pos: (i + 0.5) / count,
+          amp: 10 + Math.random() * 24,
+          freq: 0.002 + Math.random() * 0.003,
+          speed: 0.15 + Math.random() * 0.3,
+          phase: Math.random() * Math.PI * 2,
+          highlight: i % 5 === 2
+        });
+      }
+    }
+
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      threads = [];
+      makeThreads(Math.max(8, Math.round(h / 70)), false);
+      makeThreads(Math.max(6, Math.round(w / 90)), true);
+    }
+
+    function draw(ms) {
+      var t = ms / 1000, styles = getComputedStyle(document.documentElement);
+      var accent = styles.getPropertyValue("--accent"), marker = styles.getPropertyValue("--marker");
+      ctx.clearRect(0, 0, w, h);
+      threads.forEach(function (th) {
+        var length = th.vertical ? h : w, base = th.pos * (th.vertical ? w : h);
+        ctx.beginPath();
+        for (var s = 0; s <= length + 24; s += 24) {
+          var sway = th.amp * Math.sin(s * th.freq + t * th.speed + th.phase)
+                   + th.amp * 0.4 * Math.sin(s * th.freq * 2.3 - t * th.speed * 0.7);
+          if (th.vertical) ctx.lineTo(base + sway, s); else ctx.lineTo(s, base + sway);
+        }
+        ctx.strokeStyle = th.highlight ? marker : accent;
+        ctx.globalAlpha = th.highlight ? 0.6 : 0.16;
+        ctx.lineWidth = th.highlight ? 1.6 : 1;
+        ctx.stroke();
+      });
+    }
+
+    function loop(ms) { draw(ms); if (!still.matches) requestAnimationFrame(loop); }
+
+    window.addEventListener("resize", function () { resize(); if (still.matches) draw(0); });
+    resize();
+    loop(0);
+  })();
+
+  document.getElementById("copy-email").addEventListener("click", function () {
+    var btn = this, text = document.getElementById("email").textContent;
+    var done = function () { btn.textContent = "Email copied"; setTimeout(function () { btn.textContent = "Copy email address"; }, 1800); };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById("email"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = "Press Ctrl+C to copy";
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+  });
+</script>
+</body>
+</html>
